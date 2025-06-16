@@ -30,3 +30,7 @@ Create a new database in MySQL (e.g., stock_db)
 3. user.sql
 
 4️⃣ Start Local Server and run
+
+Default Admin
+Email: admin@example.com
+Password: admin123
