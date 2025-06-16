@@ -2,6 +2,15 @@
     <h2>User List</h2>
     <a href="/users/create" class="btn btn-primary mb-3">Add New User</a>
 
+    <?php if (!empty($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?php 
+                echo $_SESSION['success']; 
+                unset($_SESSION['success']);
+            ?>
+        </div>
+    <?php endif; ?>
+
     <table class="table table-bordered">
         <thead>
         <tr>

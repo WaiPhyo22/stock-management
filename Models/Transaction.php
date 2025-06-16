@@ -12,7 +12,7 @@ class Transaction {
         $this->conn = $db->connect();
     }
 
-    public function getAll($limit = 10, $offset = 0) {
+    public function getPaginated($limit = 10, $offset = 0) {
         $stmt = $this->conn->prepare("
             SELECT t.*, u.name AS user_name, p.name AS product_name
             FROM {$this->table} t

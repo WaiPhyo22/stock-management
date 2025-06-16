@@ -1,6 +1,14 @@
 <?php ob_start(); ?>
     <h2>Transactions list</h2>
     <a href="/transactions/create" class="btn btn-primary mb-3">New Transaction</a>
+    <?php if (!empty($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?php 
+                echo $_SESSION['success']; 
+                unset($_SESSION['success']);
+            ?>
+        </div>
+    <?php endif; ?>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -34,6 +42,22 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- Pagination -->
+    <?php if ($totalPages > 1): ?>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <?php
+                $baseQuery = http_build_query(array_diff_key($_GET, ['page' => '']));
+                for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="page-item <?= $i == $currentPage ? 'active' : '' ?>">
+                        <a class="page-link" href="/transactions?page=<?= $i ?>&<?= $baseQuery ?>"><?= $i ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
+    <?php endif; ?>
+
 <?php
 $content = ob_get_clean();
 $title = 'Product List';

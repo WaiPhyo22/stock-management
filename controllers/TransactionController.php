@@ -21,7 +21,13 @@ class TransactionController {
     }
 
     public function index() {
-        $transactions = $this->transactionModel->getAll();
+        $perPage = 10;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $perPage;
+
+        $transactions = $this->transactionModel->getPaginated($perPage, $offset);
+        $totalUsers = $this->userModel->countAll();
+        $totalPages = ceil($totalUsers / $perPage);
         require __DIR__ . '/../views/transactions/index.php';
     }
 
@@ -48,7 +54,7 @@ class TransactionController {
             $result = $this->transactionModel->create($product_id, $quantity, $user_id);
 
             if ($result === true) {
-                $_SESSION['success'] = "Purchase successful!";
+                $_SESSION['success'] = "Transaction created successful!";
                 header("Location: /transactions");
                 exit;
             } else {
@@ -67,16 +73,9 @@ class TransactionController {
         $id = $_GET['id'] ?? null;
         if ($id) {
             $this->transactionModel->delete($id);
+            $_SESSION['success'] = "Transaction deleted successfully.";
         }
         header('Location: /transactions');
         exit;
     }
-
-
-        public function dd($data) {
-    echo '<pre>';
-    var_dump($data);
-    echo '</pre>';
-    die();
-}
 }

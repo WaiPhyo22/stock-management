@@ -70,6 +70,7 @@ class ProductController {
         }
 
         $this->productModel->create($name, $price, $quantity);
+        $_SESSION['success'] = "Product created successfully.";
         header('Location: /products');
         exit;
     }
@@ -117,6 +118,7 @@ class ProductController {
         }
 
         $this->productModel->update($id, $name, $price, $quantity);
+        $_SESSION['success'] = "Product updated successfully.";
         header('Location: /products');
         exit;
     }
@@ -126,6 +128,7 @@ class ProductController {
         $id = $_GET['id'] ?? null;
         if ($id) {
             $this->productModel->delete($id);
+            $_SESSION['success'] = "Product deleted successfully.";
         }
         header('Location: /products');
         exit;

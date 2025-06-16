@@ -10,6 +10,23 @@ class User {
         $this->conn = $db->connect();
     }
 
+    public function existsByEmail($email, $excludeUserId = null)
+    {
+        $sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        $params = [$email];
+
+        if ($excludeUserId) {
+            $sql .= " AND id != ?";
+            $params[] = $excludeUserId;
+        }
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        $count = $stmt->fetchColumn();
+
+        return $count > 0;
+    }
+
     public function getPaginated($limit, $offset) {
         $stmt = $this->conn->prepare("SELECT * FROM users ORDER BY id DESC LIMIT :limit OFFSET :offset");
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);

@@ -39,12 +39,7 @@ class AuthController {
             }
         }
     }
-public function dd($data) {
-    echo '<pre>';
-    var_dump($data);
-    echo '</pre>';
-    die();
-}
+
     public function logout() {
         session_destroy();
         header("Location: /login");
