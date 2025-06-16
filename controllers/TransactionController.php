@@ -44,6 +44,7 @@ class TransactionController {
             $quantity = (int) ($_POST['quantity'] ?? 0);
             // $user_id = $_SESSION['user']['id'];
             $user_id = $_POST['user_id'];
+            $total_price = $_POST['total_price'];
 
             if (!$product_id || $quantity <= 0) {
                 $_SESSION['error'] = "Invalid input.";
@@ -51,7 +52,7 @@ class TransactionController {
                 exit;
             }
 
-            $result = $this->transactionModel->create($product_id, $quantity, $user_id);
+            $result = $this->transactionModel->create($product_id, $quantity, $user_id, $total_price);
 
             if ($result === true) {
                 $_SESSION['success'] = "Transaction created successful!";

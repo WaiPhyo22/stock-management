@@ -33,7 +33,7 @@ class Transaction {
     }
 
     // Create transaction with stock check & update
-    public function create($product_id, $quantity, $user_id) {
+    public function create($product_id, $quantity, $user_id, $total_price) {
         // Start transaction to ensure atomicity
         $this->conn->beginTransaction();
 
@@ -52,8 +52,8 @@ class Transaction {
             }
 
             // 2. Insert transaction record
-            $stmt = $this->conn->prepare("INSERT INTO {$this->table} (product_id, quantity, user_id, created_at) VALUES (?, ?, ?, NOW())");
-            $stmt->execute([$product_id, $quantity, $user_id]);
+            $stmt = $this->conn->prepare("INSERT INTO {$this->table} (product_id, quantity, user_id, total_price, created_at) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->execute([$product_id, $quantity, $user_id, $total_price]);
 
             // 3. Update product quantity
             $newQty = $product['quantity_available'] - $quantity;

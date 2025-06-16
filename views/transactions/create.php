@@ -1,5 +1,13 @@
 <?php ob_start(); ?>
     <h2>New Transaction</h2>
+    <?php if (!empty($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?php 
+            echo $_SESSION['error']; 
+            unset($_SESSION['error']);
+        ?>
+    </div>
+    <?php endif; ?>
 
     <form method="POST" action="/transactions/store">
         <!-- Hidden Logged-in User -->
